@@ -65,7 +65,28 @@ int main() {
   for (int i = 0; i < layers_len; i++) {
     json_object *layer = json_object_array_get_idx(layers, i);
 
-    printf("mediaType: %s\n", json_object_get_string(layers));
+    json_object *digest = NULL;
+    if (json_object_object_get_ex(layer, "digest", &digest) == 0) {
+      fprintf(stderr, "Error: malformed layer, 'digest' not found\n");
+      return 1;
+    }
+
+    json_object *annotations = NULL;
+    if (json_object_object_get_ex(layer, "annotations", &annotations) == 0) {
+      fprintf(stderr, "Error: malformed layer, 'annotations' not found\n");
+      return 1;
+    }
+
+    json_object *title = NULL;
+    if (json_object_object_get_ex(annotations, "org.opencontainers.image.title",
+                                  &title) == 0) {
+      fprintf(stderr, "Error: malformed layer, "
+                      "'org.opencontainers.image.title' not found\n");
+      return 1;
+    }
+
+    printf("  * %s: %s\n", json_object_get_string(title),
+           json_object_get_string(digest));
   }
 
   json_object_put(root);

@@ -8,16 +8,22 @@
 #define MAX_LINE_LEN 2048
 #define MAX_STR_LEN (1024 * 1024)
 
-int main() {
+/**
+ * Reads stdin to a dynamically allocated buffer.
+ *
+ * @param str_ptr Pointer to the buffer pointer.
+ * @return Number of characters read or -1 on error.
+ */
+ssize_t read_input(char **str_ptr) {
   FILE *input = stdin;
+  char *str = NULL;
 
   if (!input) {
     fprintf(stderr, "Error: failed to use stdin");
-    return 1;
+    return -1;
   }
 
-  char *str = NULL;
-  size_t len = 0;
+  ssize_t len = 0;
   size_t line_max = 0;
   char line[MAX_LINE_LEN];
 
@@ -29,7 +35,7 @@ int main() {
     if (len + line_len + 1 > MAX_STR_LEN) {
       fprintf(stderr, "Error: input exceeds %d\n", MAX_STR_LEN);
       free(str);
-      return 1;
+      return -1;
     }
 
     if (len + line_len + 1 > line_max) {
@@ -42,12 +48,23 @@ int main() {
     len += line_len;
   }
 
+  *str_ptr = str;
+
+  return len;
+}
+
+int main() {
+  char *str = NULL;
+
+  if (read_input(&str) == -1) {
+    return 1;
+  }
+
   json_object *root = json_tokener_parse(str);
   if (!root) {
     fprintf(stderr, "Error: failed to parse json\n");
     return 1;
   }
-
   free(str);
 
   json_object *layers = NULL;

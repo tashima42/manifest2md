@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "artifactType": "application/vnd.unknown.artifact.v1",
+  "config": {
+    "mediaType": "application/vnd.oci.empty.v1+json",
+    "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "size": 2,
+    "data": "e30="
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
+      "digest": "sha256:a330c5fc75c1bc6bd6267eb2003f4000cff81df2294284ad90b1d7d28699854a",
+      "size": 584,
+      "annotations": {
+        "org.opencontainers.image.title": "rancher-components.txt"
+      }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar",
+      "digest": "sha256:61d404e1ee8b5351965a73d156c01f05b3d4290b15250071b8ddd06f6803e866",
+      "size": 9328656,
+      "annotations": {
+        "org.opencontainers.image.title": "rancher-data.json"
+      }
+    }
+  ],
+  "annotations": {
+    "org.opencontainers.image.created": "2024-10-08T15:00:54Z"
+  }
+}

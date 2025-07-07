@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 
 #define MAX_LINE_LEN 2048
 #define MAX_STR_LEN (1024 * 1024)
